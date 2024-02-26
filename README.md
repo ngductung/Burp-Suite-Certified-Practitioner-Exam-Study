@@ -3836,6 +3836,6 @@ Youtube Information Security content creators channels (***in no particular orde
 - Scan **HTTP Smuggling** thì chỉ dùng nên scan mode `Smuggle Probe`, khi đã tuyệt vọng vì không thể xác định các lỗi khác thì mới scan hết :)))
 - Nếu có SQLi mà muốn dùng `sqlmap` để scan cho nhanh thì nên dùng options `-u + <url>`  và truyền thêm cả cookie, đừng dùng `-r` truyền file vì đã thử và không scan ra được
 - Nên brute force 2 App luôn từ đầu sau đó đi xác định các lỗi khác để tránh mất thời gian khi xác định các lỗi khác xong mà không tìm thấy lỗi, lúc đó mới quay lại brute force thì khá mất thời gian
-- Trong thời gian brute force, sqlmap dump db, scan smuggling thì có chuyển sang APP còn lại để làm 
+- Trong thời gian brute force, sqlmap dump db, scan smuggling thì có thể chuyển sang APP còn lại để làm 
 - Theo những gì đã đọc và làm thì khó nhất ở stage 1, các stage sau chỉ là muỗi
 	        
