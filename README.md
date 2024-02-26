@@ -3,6 +3,8 @@
 
 >This is my study notes with over a 100 PortSwigger Academy labs that I used to pass the [Burp Suite Certified Practitioner](https://portswigger.net/web-security/certification) Exam and obtained my [BSCP qualification](https://portswigger.net/web-security/e/c/6e42f5738e5b9bf8).  
 >Go to [PortSwigger Academy](https://portswigger.net/web-security/all-materials) to get the original learning materials.  
+
+[My experience](My-experience)   
   
 **[FOOTHOLD](#foothold) - Stage 1**  
 [Content Discovery](#content-discovery)  
@@ -3823,4 +3825,17 @@ Youtube Information Security content creators channels (***in no particular orde
 >My tip when preparing, is to understand the academy labs. Extra work is required as the labs do not always provide the identification of the vulnerability step.  
 >In my study notes I document the lab guides from the official PortSwigger academy to make sure I know how to identify the vulnerability, use it in different scenarios and make payloads that show the impact when exploiting the vulnerability. As example crafting a XSS cookie stealer payload instead of just calling the `print` function.  
 >The BSCP qualification on my resume demonstrate a deep knowledge of the latest vulnerability classes and how to exploit Web Applications, proving my hacking ability to employers and the community.  
-  
+
+
+# My experience  
+
+## Dấu hiệu nhận biết một số lab
+- Các lỗi đã exploit để vượt qua các stage trước sẽ không dùng để exploit ở stage sau
+- Nếu có file js khác với 2 file `labHeader.js` và `submitSolution.js` thì có thể sẽ có lỗi **XSS**, **Web cache poisoning**, **HTTP Smuggling**   
+- Có 1 API được gọi để lấy những thông tin như `session, email, tokenID, secret,...` thì có khả năng cao là sẽ có lỗi **CORS** (ví dụ như API `/account_api`)
+- Scan **HTTP Smuggling** thì chỉ dùng nên scan mode `Smuggle Probe`, khi đã tuyệt vọng vì không thể xác định các lỗi khác thì mới scan hết :)))
+- Nếu có SQLi mà muốn dùng `sqlmap` để scan cho nhanh thì nên dùng options `-u + <url>`  và truyền thêm cả cookie, đừng dùng `-r` truyền file vì đã thử và không scan ra được
+- Nên brute force 2 App luôn từ đầu sau đó đi xác định các lỗi khác để tránh mất thời gian khi xác định các lỗi khác xong mà không tìm thấy lỗi, lúc đó mới quay lại brute force thì khá mất thời gian
+- Trong thời gian brute force, sqlmap dump db, scan smuggling thì có chuyển sang APP còn lại để làm 
+- Theo những gì đã đọc và làm thì khó nhất ở stage 1, các stage sau chỉ là muỗi
+	        
