@@ -1037,6 +1037,7 @@ GET /js/geolocate.js?callback=setCountryCookie&callback=FUZZERFunction; HTTP/2
 ## Host Headers  
 
 [Spoof IP Address](#spoof-ip-address)  
+[Bypass verify Host header](#Bypass verify Host header)    
 [HOST Connection State](#host-connection-state)  
 [Host Routing based SSRF](#host-routing-based-ssrf)  
 [SSRF via flawed Host request parsing](#absolute-get-url--host-ssrf)  
@@ -1059,6 +1060,14 @@ X-Forwarded-Server: EXPLOIT.net
 ![Exploit Server Logs capture the forgot password reset token](images/HOST-Header-forgot-password-reset.PNG)  
 
 [PortSwigger Lab: Password reset poisoning via middle-ware](https://portswigger.net/web-security/authentication/other-mechanisms/lab-password-reset-poisoning-via-middleware)  
+
+### Bypass verify Host header    
+> Server check host header   
+![Bypass verify host header](images/check-host-header.png)      
+
+> Maybe can use this way to bypass (using `?`)     
+![Using special character](images/use_special_character.png)     
+
 
 ### HOST Connection State  
 
